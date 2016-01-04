@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <title>SAAC | Inicio</title>
+
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/all-animation.css" />
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/pao.css" />
+        <!-- Bootstrap core CSS -->
+        <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="dist/css/signin.css" rel="stylesheet">
+        <link href="plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    	<link href="bootstrap/css/inicio.css" rel="stylesheet" type="text/css">
+    	<!-- JavaScript plugins -->
+    	<script type="text/javascript" src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	    <script type="text/javascript" src="plugins/sweetalert/sweetalert.min.js" ></script>
+	    <script type="text/javascript" src="plugins/valideasy/jquery-valideasy.js" ></script>
+		<!-- Bootstrap core JavaScript================================================== -->
+	    <script src="dist/js/bootstrap.js"></script>
+	    <!-- Javascript functionality -->
+	    <script src="dist/js/login.js"></script>
+	</head>
+    <body>
+        <div class="container">
+            <div class="header clearfix" float="left">
+
+              <h3 class="text-muted">Sistema de Apoyo Administrativo a Condominios</h3>
+                 <div class="flip-left">
+                <img src="dist/img/logo3.png" alt="" align="right"/> 
+                 </div>
+            </div>
+            
+            </div>
+            <!-- Esto solia ser un formulario :v -->
+            <div id="login-form" class="form-horizontal col-lg-offset-2" >
+                <div class="col-md-offset-2">
+                    <h2>Ingresa a SAAC</h2>
+                </div>
+                <div class="form-group">
+                    <label for="userName" class="col-sm-2 control-label">Usuario o Correo</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control required" id="userName" placeholder="Nombre de usuario" title="Nombre de usuario" />
+                        <p id="userName_errors" class="error-wrapper"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="claveUser" class="col-sm-2 control-label">Constraseña</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control required" id="claveUser" placeholder="Clave de usuario" title="Clave de usuario" />
+                        <p id="claveUser_errors" class="error-wrapper"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-5 col-md-offset-4">
+                        <button type="button" class="btn btn-default col-sm-4" onclick="showFormRegister()">Registrarme</button>
+                        <button id="signin" class="btn btn-info col-md-offset-1 col-sm-4">Ingresar</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-6 col-sm-10">
+                        <a href="#">Olvide mi contraseña</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Registro de condómino</h4>
+                        </div>
+                        <div class="modal-body">
+                        	<!-- Action: AddCondomino name="frmUsers" -->
+                            <form class="form-horizontal" id="signup-form" >
+                                <div class="page-header">
+                                    <div class="form-group">
+                                        <label for="txtName" class="col-sm-2 control-label">Nombre(s)</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control required" id="txtName" name="txtName" placeholder="Pon tu nombre aqui" title="Nombre"  />
+                                            <p id="txtName_errors" class="error-wrapper"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtApellidos" class="col-sm-2 control-label">Apellidos</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control required" id="txtApellidos" name="txtApellidos" placeholder="Pon tus apellidos aqui"  title="Apellidos" />
+                                            <p id="txtApellidos_errors" class="error-wrapper"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtMail" class="col-sm-2 control-label">Correo electrónico</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control required email" id="txtMail" name="txtMail" placeholder="mail@mail.com" title="Correo electrónico" />
+                                            <p id="txtMail_errors" class="error-wrapper"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtContacto" class="col-sm-2 control-label">Teléfono de contacto</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control required phone" id="txtContacto" name="txtContacto" placeholder="5512345678" title="Teléfono"  />
+                                            <p id="txtContacto_errors" class="error-wrapper"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtUserName" class="col-sm-2 control-label">Nombre de Usuario</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control required" id="txtUserName" name="txtUserName" placeholder="Nombre de usuario aquí" title="Nombre de usuario" />
+                                        <p id="txtUserName_errors" class="error-wrapper"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtUserClave" class="col-sm-2 control-label">Contraseña</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control required" id="txtUserClave" name="txtUserClave" placeholder="Clave de usuario aquí" title="Contraseña" />
+                                        <p id="txtUserClave_errors" class="error-wrapper"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtUserClave2" class="col-sm-2 control-label">Repetir contrase&ntilde;a</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control passwordcheck" id="txtUserClave2"  placeholder="Repetir clave de usuario" data-error-passwordcheck="txtUserClave" />
+                                        <p id="txtUserClave2_errors" class="error-wrapper"></p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                    <button id="signup" type="submit" class="btn btn-primary">Registarme</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </body>
+</html>
