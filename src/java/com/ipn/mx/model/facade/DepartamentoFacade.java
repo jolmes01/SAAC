@@ -36,7 +36,7 @@ public class DepartamentoFacade {
         return dao.read(departamento);
     }
 
-    public List readAll(){
-        return dao.readAll();
+    public List readAll(int idEdificio){
+        return dao.readAll(idEdificio);
     }
 }

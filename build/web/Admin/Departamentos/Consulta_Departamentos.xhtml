@@ -2,11 +2,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>SAAC | Página Principal</title>
+        <title>SAAC | Administrador</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
         <!-- Bootstrap 3.3.5 -->
@@ -22,17 +24,22 @@
         <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/dist/css/skins/_all-skins.min.css" />
         <!--JQuery -->
         <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/plugins/sweetalert/sweetalert.min.js" ></script>
+        <link href="#{facesContext.externalContext.requestContextPath}/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
     </h:head>
     <h:body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
+            <ui:include src="../../WEB-INF/forms/headerAdmin.xhtml" />
+            <ui:include src="../../WEB-INF/forms/menuAdminInterno.xhtml" />
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1 class="col-lg-offset-8">
-                        ´Cosas terminadas por probar
+                        Bienvenido administrador
                     </h1>
                 </section>
+
                 <!-- Main content -->
                 <section class="content">
                     <!-- Main row -->
@@ -40,17 +47,39 @@
                         <section class="col-lg-10 connectedSortable">
                             <div class="box box-info">
                                 <div class="box-header">
-                                    <h3 class="box-title">Modulos realizados</h3>
+                                    <h3 class="box-title">Lista de departamentos</h3>
                                     <!-- tools box -->
+                                    <div class="pull-right box-tools">
+                                        <button class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+                                    </div><!-- /. tools -->
                                     <div class="box-body">
-                                        <h1>Partes Terminadas para prueba</h1>
-                                        <h:form>
-                                            <p:menu>
-                                                <p:submenu label="Departamentos">
-                                                    <p:menuitem value="Nuevo" outcome="#{DepartamentoBean.deptoPrueba(true)}" />
-                                                    <p:menuitem value="Consultar" outcome="#{DepartamentoBean.deptoPrueba(false)}" />
-                                                </p:submenu>
-                                            </p:menu>
+                                        <h:form id="formArticulos">
+                                            <p:dataTable class="table table-hover" value="#{DepartamentoBean.lista}"
+                                                         var="depto"
+                                                         paginator="true"
+                                                         rows="5"
+                                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                         rowsPerPageTemplate="5,10,15">
+                                                <p:column>
+                                                    <f:facet name="header"><h:outputText value="Número de departamento"/></f:facet>
+                                                    <h:outputText value="#{depto.idDepartamento}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header"><h:outputText value="Propietario"/></f:facet>
+                                                    <h:outputText value="#{depto.usuario.nombre} #{depto.usuario.apPaterno} #{depto.usuario.apMaterno}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header"><h:outputText value="Acciones"/></f:facet>
+                                                    <p:commandButton 
+                                                        action="#{DepartamentoBean.editar(depto.idDepartamento,depto.edificio.idEdificio)}"
+                                                        value="Actualizar" />
+                                                    <p:commandButton action="#{DepartamentoBean.borrar()}" value="Eliminar" />
+                                                    <div class="btn btn-default action-down-qr" title="Descargar QR" id="qr-#{DepartamentoBean.idDepartamento}" >
+                                                        <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
+                                                    </div>
+                                                </p:column>
+                                            </p:dataTable>
+                                            <p:commandButton action="#{DepartamentoBean.nuevo()}" value="Nuevo Depto" />
                                         </h:form>
                                     </div>
                                 </div>
@@ -66,6 +95,10 @@
                 <strong>Copyright &copy; 2015-2016.</strong> Misael, Jorge, Paola y Rubí.
             </footer>
         </div><!-- ./wrapper -->
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
         <!-- Bootstrap 3.3.5 -->
         <script src="#{facesContext.externalContext.requestContextPath}/bootstrap/js/bootstrap.min.js"></script>
         <!-- Morris.js charts -->

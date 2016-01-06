@@ -2,11 +2,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>SAAC | Página Principal</title>
+        <title>SAAC | Administrador</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
         <!-- Bootstrap 3.3.5 -->
@@ -25,12 +27,14 @@
     </h:head>
     <h:body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
+            <ui:include src="../../WEB-INF/forms/headerAdmin.xhtml" />
+            <ui:include src="../../WEB-INF/forms/menuAdminInterno.xhtml" />
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1 class="col-lg-offset-8">
-                        ´Cosas terminadas por probar
+                        Bienvenido administrador
                     </h1>
                 </section>
                 <!-- Main content -->
@@ -40,17 +44,37 @@
                         <section class="col-lg-10 connectedSortable">
                             <div class="box box-info">
                                 <div class="box-header">
-                                    <h3 class="box-title">Modulos realizados</h3>
+                                    <h3 class="box-title">Gestión de departamento</h3>
                                     <!-- tools box -->
+                                    <div class="pull-right box-tools">
+                                        <button class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+                                    </div><!-- /. tools -->
                                     <div class="box-body">
-                                        <h1>Partes Terminadas para prueba</h1>
-                                        <h:form>
-                                            <p:menu>
-                                                <p:submenu label="Departamentos">
-                                                    <p:menuitem value="Nuevo" outcome="#{DepartamentoBean.deptoPrueba(true)}" />
-                                                    <p:menuitem value="Consultar" outcome="#{DepartamentoBean.deptoPrueba(false)}" />
-                                                </p:submenu>
-                                            </p:menu>
+                                        <h:form id="formDepto" class="form-horizontal">
+                                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                                            <h:inputHidden id="accion" value="#{DepartamentoBean.flag}" />
+                                            <div class="form-group">
+                                                <p:outputLabel for="inputDepto" class="col-sm-4 control-label" value="Número de departamento" />
+                                                <p:inputText id="inputDepto" placeholder="101" value="#{DepartamentoBean.idDepartamento}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <p:outputLabel for="inputDueno" class="col-sm-4 control-label" value="Propietario" />
+                                                <p:selectOneMenu id="inputDueno" value="#{DepartamentoBean.usuario}" converter="usuarioConverter" effect="fade" var="u" filter="true" filterMatchMode="startsWith">
+                                                    <f:selectItems value="#{DepartamentoBean.usuarios}" var="usuario" itemLabel="#{usuario.nombre} #{usuario.apPaterno} #{usuario.apMaterno}" itemValue="#{u.idUsuario}" />
+                                                    <p:column>
+                                                        <h:outputText value="#{u.nombre} #{u.apPaterno} #{u.apMaterno}" />
+                                                    </p:column>
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div class="form-group">
+                                                <p:outputLabel for="inputHabitantes" class="col-sm-4 control-label" value="Número de habitantes" />
+                                                <p:inputText id="inputHabitantes" placeholder="3" value="#{DepartamentoBean.personas}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <h:inputHidden id="inputSaldo" value="#{DepartamentoBean.saldoFavor}"/>
+                                            </div>
+                                            <p:commandButton class="pull-right btn btn-success" action="#{DepartamentoBean.crear()}" rendered="#{DepartamentoBean.modoCrear}" ajax="false" value="Enviar datos" />
+                                            <p:commandButton class="pull-right btn btn-success" action="#{DepartamentoBean.actualizar()}" rendered="#{DepartamentoBean.modoActualizar}" ajax="false"  value="Actualizar registro" />
                                         </h:form>
                                     </div>
                                 </div>
@@ -66,6 +90,10 @@
                 <strong>Copyright &copy; 2015-2016.</strong> Misael, Jorge, Paola y Rubí.
             </footer>
         </div><!-- ./wrapper -->
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
         <!-- Bootstrap 3.3.5 -->
         <script src="#{facesContext.externalContext.requestContextPath}/bootstrap/js/bootstrap.min.js"></script>
         <!-- Morris.js charts -->

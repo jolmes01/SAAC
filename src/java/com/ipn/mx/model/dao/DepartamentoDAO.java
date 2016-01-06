@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.List;
 
 import com.ipn.mx.model.dto.Departamento;
+import com.ipn.mx.model.dto.Edificio;
+import com.ipn.mx.model.dto.Usuario;
 import com.ipn.mx.utils.CodeGenerator;
 import com.ipn.mx.utils.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -38,6 +40,7 @@ public class DepartamentoDAO {
                 value = 0;
             }
         }
+        System.err.println(value);
         return value;
     }
 
@@ -72,10 +75,19 @@ public class DepartamentoDAO {
     public Departamento read(Departamento departamento){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
+        List resultados = null;
         try {
             t.begin();
-            departamento = (Departamento) s.get(Departamento.class, departamento.getIdDepartamento());
+            Query q = s.createQuery("FROM Departamento WHERE idDepartamento = :deptartamento_idDepartamento AND idEdificio = :departamento_idEdificio");
+            q.setParameter("deptartamento_idDepartamento", departamento.getIdDepartamento());
+            q.setParameter("departamento_idEdificio", departamento.getEdificio().getIdEdificio());
+            resultados = q.list();
             t.commit();
+            if(resultados.size() > 0){
+                departamento = (Departamento) resultados.get(0);
+            }else{
+                departamento = null;
+            }
         }catch(HibernateException he){
             if(t.isActive() && t != null){
                 t.rollback();
@@ -84,13 +96,14 @@ public class DepartamentoDAO {
         return departamento;
     }
 
-    public List readAll(){
+    public List readAll(int idEdificio){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
         List resultados = null;
         try {
             t.begin();
-            Query q = s.createQuery("FROM Departamento");
+            Query q = s.createQuery("FROM Departamento WHERE idEdificio = :departamento_id");
+            q.setParameter("departamento_id", idEdificio);
             resultados = q.list();
             t.commit();
         }catch(HibernateException he){
