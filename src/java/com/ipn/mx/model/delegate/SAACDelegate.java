@@ -69,8 +69,8 @@ public class SAACDelegate {
         return df.read(departamento);
     }
 
-    public List readAllDepartamentos(){
-        return df.readAll();
+    public List readAllDepartamentos(int idEdificio){
+        return df.readAll(idEdificio);
     }
     
     //Código para Edificio
