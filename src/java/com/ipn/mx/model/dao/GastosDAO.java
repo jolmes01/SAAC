@@ -78,13 +78,14 @@ public class GastosDAO {
         return gastos;
     }
 
-    public List readAll(){
+    public List readAll(int idEdificio){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
         List resultados = null;
         try {
             t.begin();
-            Query q = s.createQuery("FROM Gastos");
+            Query q = s.createQuery("FROM Gastos WHERE idEdificio = :edificio_id");
+            q.setParameter("edificio_id", idEdificio);
             resultados = q.list();
             t.commit();
         }catch(HibernateException he){

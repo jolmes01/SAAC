@@ -18,16 +18,35 @@ import org.hibernate.Transaction;
  * @author JL
  */
 public class configuracionGasDAO {
-    public int create(configuracionGas confGas) {
+
+    public int create(configuracionGas confGas, int idEdificio) {
         int value = 1;
-        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction t = s.getTransaction();
+        int existe = 0;
+        Session s;
+        Transaction t;
+        List<configuracionGas> confGasList = readAll(idEdificio);
+        if (confGasList != null) {
+            existe = confGasList.size();
+            s = HibernateUtil.getSessionFactory().getCurrentSession();
+            t = s.getTransaction();
+        } else {
+            return value = 3;
+        }
         try {
             t.begin();
-            s.save(confGas);
+            if (existe == 0) {
+                s.save(confGas);
+            }
+            if(existe == 1){
+                configuracionGas cg = confGasList.get(0);
+                confGas.setEdificio(cg.getEdificio());
+                confGas.setIdConfiguracion(cg.getIdConfiguracion());
+                s.update(confGas);
+                value = 2;
+            }
             t.commit();
-        }catch(HibernateException he){
-            if(t.isActive() && t != null){
+        } catch (HibernateException he) {
+            if (t.isActive() && t != null) {
                 t.rollback();
                 value = 0;
             }
@@ -42,53 +61,54 @@ public class configuracionGasDAO {
             t.begin();
             s.update(confGas);
             t.commit();
-        }catch(HibernateException he){
-            if(t.isActive() && t != null){
+        } catch (HibernateException he) {
+            if (t.isActive() && t != null) {
                 t.rollback();
             }
         }
     }
 
-    public void delete(configuracionGas confGas){
+    public void delete(configuracionGas confGas) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
         try {
             t.begin();
             s.delete(confGas);
             t.commit();
-        }catch(HibernateException he){
-            if(t.isActive() && t != null){
+        } catch (HibernateException he) {
+            if (t.isActive() && t != null) {
                 t.rollback();
             }
         }
     }
 
-    public configuracionGas read(configuracionGas confGas){
+    public configuracionGas read(configuracionGas confGas) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
         try {
             t.begin();
             confGas = (configuracionGas) s.get(configuracionGas.class, confGas.getIdConfiguracion());
             t.commit();
-        }catch(HibernateException he){
-            if(t.isActive() && t != null){
+        } catch (HibernateException he) {
+            if (t.isActive() && t != null) {
                 t.rollback();
             }
         }
         return confGas;
     }
 
-    public List readAll(){
+    public List readAll(int idEdificio) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
         List resultados = null;
         try {
             t.begin();
-            Query q = s.createQuery("FROM configuracionGas");
+            Query q = s.createQuery("FROM configuracionGas WHERE idEdificio = :edificio_id");
+            q.setParameter("edificio_id", idEdificio);
             resultados = q.list();
             t.commit();
-        }catch(HibernateException he){
-            if(t.isActive() && t != null){
+        } catch (HibernateException he) {
+            if (t.isActive() && t != null) {
                 t.rollback();
             }
         }

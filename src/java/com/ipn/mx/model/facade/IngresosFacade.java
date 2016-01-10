@@ -36,7 +36,7 @@ public class IngresosFacade {
         return dao.read(object);
     }
 
-    public List readAll(){
-        return dao.readAll();
+    public List readAll(int idEdificio){
+        return dao.readAll(idEdificio);
     }
 }

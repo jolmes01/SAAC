@@ -21,10 +21,12 @@ import javax.faces.bean.ManagedBean;
 public class UsuarioService {
 
     private List<Usuario> usuarios;
+    private int idEdificioSession;
 
     @PostConstruct
     public void init() {
-        usuarios = new SAACDelegate().readAllUsuarios();
+        idEdificioSession = 1; //Obtener valor de la session
+        usuarios = new SAACDelegate().readAllUsuarios(idEdificioSession);
     }
 
     public List<Usuario> getUsuarios() {

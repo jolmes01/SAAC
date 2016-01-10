@@ -28,7 +28,7 @@
     <h:body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
             <ui:include src="../../WEB-INF/forms/headerAdmin.xhtml" />
-            <ui:include src="../../WEB-INF/forms/menuAdminInterno.xhtml" />
+            <ui:include src="../../WEB-INF/forms/menuAdmin.xhtml" />
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -52,10 +52,10 @@
                                     <div class="box-body">
                                         <h:form id="formDepto" class="form-horizontal">
                                             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                                            <h:inputHidden id="accion" value="#{DepartamentoBean.flag}" />
+                                            <h:inputHidden id="accion" value="#{DepartamentoBean.accion}" />
                                             <div class="form-group">
                                                 <p:outputLabel for="inputDepto" class="col-sm-4 control-label" value="Número de departamento" />
-                                                <p:inputText id="inputDepto" placeholder="101" value="#{DepartamentoBean.idDepartamento}"/>
+                                                <p:spinner min="1" id="inputDepto" placeholder="101" value="#{DepartamentoBean.idDepartamento}"/>
                                             </div>
                                             <div class="form-group">
                                                 <p:outputLabel for="inputDueno" class="col-sm-4 control-label" value="Propietario" />

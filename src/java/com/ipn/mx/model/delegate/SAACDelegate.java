@@ -13,6 +13,7 @@ import com.ipn.mx.model.dto.Ingresos;
 import com.ipn.mx.model.dto.Mantenimiento;
 import com.ipn.mx.model.dto.Usuario;
 import com.ipn.mx.model.dto.configuracionGas;
+import com.ipn.mx.model.dto.configuracionMtto;
 import com.ipn.mx.model.facade.DepartamentoFacade;
 import com.ipn.mx.model.facade.EdificioFacade;
 import com.ipn.mx.model.facade.GasFacade;
@@ -132,8 +133,8 @@ public class SAACDelegate {
         return gastosf.read(object);
     }
 
-    public List readAllGastos(){
-        return gastosf.readAll();
+    public List readAllGastos(int idEdificio){
+        return gastosf.readAll(idEdificio);
     }
     
     //Código para Ingresos
@@ -153,8 +154,8 @@ public class SAACDelegate {
         return inf.read(object);
     }
 
-    public List readAllIngresos(){
-        return inf.readAll();
+    public List readAllIngresos(int idEdificio){
+        return inf.readAll(idEdificio);
     }
     
     //Código para Mantenimiento
@@ -195,8 +196,8 @@ public class SAACDelegate {
         return uf.read(object);
     }
 
-    public List readAllUsuarios(){
-        return uf.readAll();
+    public List readAllUsuarios(int idEdificio){
+        return uf.readAll(idEdificio);
     }
     
     public boolean login(Usuario object){
@@ -212,26 +213,12 @@ public class SAACDelegate {
     }
     
     //Código para ConfiguracionGas
-    public int create(configuracionGas object) {
-        return cgf.create(object);
-    }
-
-    public void update(configuracionGas object) {
-        cgf.update(object);
-    }
-
-    public void delete(configuracionGas object){
-        cgf.delete(object);
-    }
-
-    public configuracionGas read(configuracionGas object){
-        return cgf.read(object);
-    }
-
-    public List readAllConfigGas(){
-        return cgf.readAll();
+    public int create(configuracionGas object, int idEdificio) {
+        return cgf.create(object,idEdificio);
     }
     
     //Código para ConfiguracionMtto
-
+    public int create(configuracionMtto object, int idEdificio) {
+        return cmf.create(object, idEdificio);
+    }
 }

@@ -28,14 +28,17 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name = "DepartamentoBean")
 @SessionScoped
-public class DepartamentoBean {
-
-    private boolean flag;
+public class DepartamentoBean extends BaseBean {
+    
+    private int idEdificioSession;
 
     private Departamento dto;
     private List<Usuario> usuarios;
     private List<Edificio> edificios;
-    private String URL_CONTEXT;
+    private static final String URL_CONTEXT = "/SAAC/faces/Admin/Departamentos/";
+    //Formularios para Departamentos
+    private static final String DEPARTAMENTO_FORM = "Departamento.xhtml";
+    private static final String CONSULTA_DEPARTAMENTOS_FORM = "Consulta_Departamentos.xhtml";
 
     @ManagedProperty("#{usuarioService}")
     private UsuarioService service;
@@ -47,46 +50,40 @@ public class DepartamentoBean {
 
     public DepartamentoBean() {
         System.err.println("DepartamentoBean Construido");
-        URL_CONTEXT = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath() + "/faces/";
-        flag = false;
+        //Asignar al siguiente elemento el valor del idEdificio asignado en la session activa
+        idEdificioSession = 1;
     }
     
-    public String deptoPrueba(boolean isNuevo){
+    //Borrar al terminar el proyecto
+    public void deptoPrueba(boolean isNuevo) throws IOException{
         dto = new Departamento();
-        setFlag(true);
-        if(isNuevo) return "Admin/Departamentos/Departamento.xhtml";
-        else return "Admin/Departamentos/Consulta_Departamentos.xhtml";
+        setAccion(ACC_CREAR);
+        if(isNuevo) redirectTo(URL_CONTEXT + DEPARTAMENTO_FORM);
+        else redirectTo(URL_CONTEXT + CONSULTA_DEPARTAMENTOS_FORM);
     }
 
     //Actions
-    public String nuevo(boolean isExterno) {
+    public void nuevo() throws IOException {
         dto = new Departamento();
-        setFlag(true);
-        if (isExterno) {
-            return "Departamentos/Departamento.xhtml";
-        } else {
-            return "Departamento.xhtml";
-        }
+        setAccion(ACC_CREAR);
+        redirectTo(DEPARTAMENTO_FORM);
+        
     }
 
-    public String editar(int idDepartamento, int idEdificio) {
+    public void editar(int idDepartamento, int idEdificio) throws IOException {
         dto = new Departamento();
-        setFlag(false);
+        setAccion(ACC_ACTUALIZAR);
         dto = seleccionaDepartamento(idDepartamento, idEdificio);
-        return "Departamento.xhtml";
+        redirectTo(URL_CONTEXT + DEPARTAMENTO_FORM);
     }
 
-    public String consultar(boolean isExterno) {
-        if (isExterno) {
-            return "Departamentos/Consultar_Departamentos.xhtml";
-        } else {
-            return "Consulta_Departamentos.xhtml";
-        }
+    public void consultar() throws IOException {
+        redirectTo(URL_CONTEXT + CONSULTA_DEPARTAMENTOS_FORM);
     }
 
-    public String crear() throws IOException {
+    public void crear() throws IOException {
         Edificio e = new Edificio();
-        e.setIdEdificio(1);
+        e.setIdEdificio(idEdificioSession);
         dto.setEdificio(e);
         dto.setCodigoQR(CodeGenerator.generateSHA(dto.getUsuario().getUserName() + dto.getUsuario().getClaveUser() + dto.getIdDepartamento()));
         String directorio = FacesContext.getCurrentInstance().getExternalContext().getRealPath("");
@@ -96,49 +93,51 @@ public class DepartamentoBean {
             int value = sd.create(dto);
             if (value == 1) {
                 success("INFO: ", "El departamento fue creado satisfactoriamente");
-                return "Consulta_Departamentos.xhtml";
+                clearBean();
+                redirectTo(URL_CONTEXT + CONSULTA_DEPARTAMENTOS_FORM);
             } else {
                 error("ALERTA", "El departamento que quieres crear ya existe");
-                return "Departamento.xhtml";
+                redirectTo(URL_CONTEXT + DEPARTAMENTO_FORM);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             error("error creando Depto", "Hubo un error al crear el departamento");
-            return "Departamento.xhtml";
+            redirectTo(URL_CONTEXT + DEPARTAMENTO_FORM);
         }
     }
 
-    public String actualizar() {
-        Edificio e = new Edificio();
-        e.setIdEdificio(1);
-        dto.setEdificio(e);
+    public void actualizar() throws IOException {
         SAACDelegate sd = new SAACDelegate();
         try {
+            success("INFO: ", "El departamento fue editado satisfactoriamente");
+            System.out.println("DTO ANTES DE ACTUALIZAR: " + dto);
             sd.update(dto);
-            return "Consulta_Departamentos.xhtml";
+            redirectTo(URL_CONTEXT + CONSULTA_DEPARTAMENTOS_FORM);
         } catch (Exception ex) {
             ex.printStackTrace();
             error("error editando Depto", "Hubo un error al actualizar la info del departamento");
-            return "Consulta_Departamentos.xhtml";
+            redirectTo(URL_CONTEXT + CONSULTA_DEPARTAMENTOS_FORM);
         }
     }
 
-    public String borrar() {
+    public void borrar(int idDepartamento, int idEdificio) throws IOException {
+        dto = seleccionaDepartamento(idDepartamento, idEdificio);
         SAACDelegate sd = new SAACDelegate();
         try {
             sd.delete(dto);
-            return "Consulta_Departamentos.xhtml";
+            success("INFO: ", "El departamento fue borrado satisfactoriamente");
+            redirectTo(URL_CONTEXT + CONSULTA_DEPARTAMENTOS_FORM);
         } catch (Exception ex) {
             ex.printStackTrace();
             error("error editando Depto", "Hubo un error al borrar el departamento");
-            return "Consulta_Departamentos.xhtml";
+            redirectTo(URL_CONTEXT + CONSULTA_DEPARTAMENTOS_FORM);
         }
     }
 
     public List getLista() {
         SAACDelegate sd = new SAACDelegate();
         try {
-            return sd.readAllDepartamentos(1);
+            return sd.readAllDepartamentos(idEdificioSession);
         } catch (Exception ex) {
             ex.printStackTrace();
             error("ERROR! :C", "Error al mostrar la lista de artículos");
@@ -155,6 +154,7 @@ public class DepartamentoBean {
         dto.setEdificio(e);
         try {
             dto = sd.read(dto);
+            System.out.println(dto);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -233,41 +233,8 @@ public class DepartamentoBean {
     public void setService(UsuarioService service) {
         this.service = service;
     }
-
-    protected void error(String idMensaje, String mensaje) {
-        FacesContext.getCurrentInstance().addMessage(
-                idMensaje, new FacesMessage(
-                        FacesMessage.SEVERITY_ERROR, idMensaje, mensaje));
-    }
-
-    protected void success(String idMensaje, String mensaje) {
-        FacesContext.getCurrentInstance().addMessage(
-                idMensaje, new FacesMessage(
-                        FacesMessage.SEVERITY_INFO, idMensaje, mensaje));
-    }
-
-    public void setFlag(boolean value) {
-        this.flag = value;
-        System.out.println("Asignado valo: " + flag);
-    }
-
-    public boolean getFlag() {
-        return this.flag;
-    }
-
-    public boolean isModoCrear() {
-        if (flag == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean isModoActualizar() {
-        if (flag == false) {
-            return true;
-        } else {
-            return false;
-        }
+    
+    private void clearBean(){
+        dto = new Departamento();
     }
 }
