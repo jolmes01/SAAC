@@ -47,8 +47,17 @@
                                         <h:form>
                                             <p:menu>
                                                 <p:submenu label="Departamentos">
-                                                    <p:menuitem value="Nuevo" outcome="#{DepartamentoBean.deptoPrueba(true)}" />
-                                                    <p:menuitem value="Consultar" outcome="#{DepartamentoBean.deptoPrueba(false)}" />
+                                                    <p:menuitem value="Nuevo" action="#{DepartamentoBean.deptoPrueba(true)}" />
+                                                    <p:menuitem value="Consultar" action="#{DepartamentoBean.deptoPrueba(false)}" />
+                                                </p:submenu>
+                                                <p:submenu label="Gastos">
+                                                    <p:menuitem value="Nuevo" action="#{gastosBean.gastoPrueba(true)}" />
+                                                    <p:menuitem value="Consultar" action="#{gastosBean.gastoPrueba(false)}" />
+                                                </p:submenu>
+                                                <p:submenu label="Configuracion">
+                                                    <p:menuitem value="Edificio" action="#{edificioBean.edificioPrueba(true)}" />
+                                                    <p:menuitem value="Configuración de Gas" action="#{configuracionGasBean.configGasPrueba()}" />
+                                                    <p:menuitem value="Configuración de Mantenimiento" action="#{configuracionMttoBean.configMttoPrueba()}" />
                                                 </p:submenu>
                                             </p:menu>
                                         </h:form>

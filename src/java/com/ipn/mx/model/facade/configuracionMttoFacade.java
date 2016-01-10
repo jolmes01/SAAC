@@ -20,8 +20,8 @@ public class configuracionMttoFacade {
         dao = new configuracionMttoDAO();
     }
     
-    public int create(configuracionMtto object) {
-        return dao.create(object);
+    public int create(configuracionMtto object, int idEdificio) {
+        return dao.create(object,idEdificio);
     }
 
     public void update(configuracionMtto object) {
@@ -36,7 +36,7 @@ public class configuracionMttoFacade {
         return dao.read(object);
     }
 
-    public List readAll(){
-        return dao.readAll();
+    public List readAll(int idEdificio){
+        return dao.readAll(idEdificio);
     }
 }

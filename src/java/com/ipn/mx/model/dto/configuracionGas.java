@@ -6,8 +6,7 @@
 package com.ipn.mx.model.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
-import javax.persistence.CascadeType;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,12 +24,12 @@ import javax.persistence.Table;
 public class configuracionGas implements Serializable{
     
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int idConfiguracion;
     private double costoLitro;
     private Date fechaLimite;
-    @OneToOne (cascade = CascadeType.ALL)
-    @JoinColumn (name = "idEdificio")
+    @OneToOne
+    @JoinColumn (name="idEdificio")
     private Edificio edificio;
 
     public int getIdConfiguracion() {

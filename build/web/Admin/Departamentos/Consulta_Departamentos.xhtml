@@ -30,7 +30,7 @@
     <h:body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
             <ui:include src="../../WEB-INF/forms/headerAdmin.xhtml" />
-            <ui:include src="../../WEB-INF/forms/menuAdminInterno.xhtml" />
+            <ui:include src="../../WEB-INF/forms/menuAdmin.xhtml" />
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -54,6 +54,7 @@
                                     </div><!-- /. tools -->
                                     <div class="box-body">
                                         <h:form id="formArticulos">
+                                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                                             <p:dataTable class="table table-hover" value="#{DepartamentoBean.lista}"
                                                          var="depto"
                                                          paginator="true"
@@ -73,7 +74,7 @@
                                                     <p:commandButton 
                                                         action="#{DepartamentoBean.editar(depto.idDepartamento,depto.edificio.idEdificio)}"
                                                         value="Actualizar" />
-                                                    <p:commandButton action="#{DepartamentoBean.borrar()}" value="Eliminar" />
+                                                    <p:commandButton action="#{DepartamentoBean.borrar(depto.idDepartamento,depto.edificio.idEdificio)}" value="Eliminar" />
                                                     <div class="btn btn-default action-down-qr" title="Descargar QR" id="qr-#{DepartamentoBean.idDepartamento}" >
                                                         <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
                                                     </div>

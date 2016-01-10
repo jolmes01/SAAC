@@ -5,6 +5,7 @@
  */
 package com.ipn.mx.view.beans;
 
+import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -60,6 +61,12 @@ public class BaseBean {
             System.out.println("MODO_ACTUALIZAR: false");
             return false;
         }
+    }
+    
+    protected void redirectTo(String ruta) throws IOException{
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.getExternalContext().redirect(ruta);
     }
 
 }

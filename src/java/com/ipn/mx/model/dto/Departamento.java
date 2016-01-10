@@ -24,7 +24,7 @@ public class Departamento implements Serializable{
     @Id
     private int idDepartamento;
     
-    @OneToOne (cascade = {CascadeType.PERSIST})
+    @OneToOne (cascade = {CascadeType.ALL})
     @JoinColumn (name="idUsuario")
     private Usuario usuario;
     @OneToOne

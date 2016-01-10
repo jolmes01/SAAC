@@ -20,8 +20,8 @@ public class configuracionGasFacade {
         dao = new configuracionGasDAO();
     }
     
-    public int create(configuracionGas object) {
-        return dao.create(object);
+    public int create(configuracionGas object, int idEdificio) {
+        return dao.create(object,idEdificio);
     }
 
     public void update(configuracionGas object) {
@@ -36,7 +36,7 @@ public class configuracionGasFacade {
         return dao.read(object);
     }
 
-    public List readAll(){
-        return dao.readAll();
+    public List readAll(int idEdificio){
+        return dao.readAll(idEdificio);
     }
 }
