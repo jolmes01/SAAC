@@ -9,11 +9,19 @@
 	template="../templates/adminTemplate.xhtml">
 	
 	<ui:define name="title">
-		<h:outputText value="Pagos" />
+		<h:outputText value="Mantenimiento" />
 	</ui:define>
 	
 	<ui:define name="content">
-		<h:outputText value="Aqui esta un pago :)" />
+		<h:form styleClass="form-horizontal">
+			<div class="form-group">
+				<p:outputLabel for="user" value="Usuario" styleClass="col-sm-4 control-label" />
+				<p:selectOneMenu id="user" styleClass="col-sm-4 control-label" >
+				
+				</p:selectOneMenu>
+			</div>
+			
+		</h:form>
 	</ui:define>
 	
 </ui:composition>

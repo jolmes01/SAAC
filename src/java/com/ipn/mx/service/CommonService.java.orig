@@ -47,4 +47,7 @@ public class CommonService implements Serializable {
 		return "CommonService [usuario=" + usuario + ", temporalObject="
 				+ temporalObject + ", action=" + action + "]";
 	}
+	
+	
+	
 }

@@ -28,7 +28,7 @@
 	            </div>
 	            <div class="form-group">
 	                <p:outputLabel for="inputHabitantes" class="col-sm-4 control-label" value="Número de habitantes" />
-	                <p:inputText id="inputHabitantes" placeholder="3" value="#{departamentoBean.personas}"/>
+	                <p:spinner id="inputHabitantes" placeholder="3" value="#{departamentoBean.personas}"  min="0" />
 	            </div>
 	            <div class="form-group">
 	                <h:inputHidden id="inputSaldo" value="#{departamentoBean.saldoFavor}"/>

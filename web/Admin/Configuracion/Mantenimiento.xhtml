@@ -17,7 +17,7 @@
 	       <h:inputHidden id="accion" value="#{configuracionMttoBean.accion}" />
 	       <div class="form-group">
 	           <p:outputLabel for="inputCosto" class="col-sm-4 control-label" value="Porcentaje de la cuota por retraso" />
-	           <p:spinner id="inputCosto" stepFactor="1" value="#{configuracionMttoBean.porcentajeCouta}"/>
+	           <p:spinner min="0.0" id="inputCosto" stepFactor="1" value="#{configuracionMttoBean.porcentajeCouta}"/>
 	       </div>
 	       <div class="form-group">
 	           <p:outputLabel for="inputFechaGasto" class="col-sm-4 control-label" value="Fecha límite de pago" />

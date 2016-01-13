@@ -17,7 +17,7 @@
 	        <h:inputHidden id="accion" value="#{configuracionGasBean.accion}" />
 	        <div class="form-group">
 	            <p:outputLabel for="inputCosto" class="col-sm-4 control-label" value="Costo por litro" />
-	            <p:spinner id="inputCosto" stepFactor="0.01" value="#{configuracionGasBean.costoLitro}"/>
+	            <p:spinner id="inputCosto" stepFactor="0.01" min="0.0" value="#{configuracionGasBean.costoLitro}"/>
 	        </div>
 	        <div class="form-group">
 	            <p:outputLabel for="inputFechaGasto" class="col-sm-4 control-label" value="Fecha límite de pago" />
