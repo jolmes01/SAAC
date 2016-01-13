@@ -25,14 +25,6 @@
         <servlet-class>com.ipn.mx.controller.Registrar</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Index</servlet-name>
-        <servlet-class>com.ipn.mx.controller.Index</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>Login2</servlet-name>
-        <servlet-class>com.ipn.mx.controller.Login2</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
@@ -58,22 +50,17 @@
         <url-pattern>/Registrar</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Index</servlet-name>
-        <url-pattern>/Index</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Login2</servlet-name>
-        <url-pattern>/Login2</url-pattern>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
-        <!--welcome-file>faces/index.xhtml</welcome-file-->
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>index.jsf</welcome-file>
     </welcome-file-list>
 </web-app>

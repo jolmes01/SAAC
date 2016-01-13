@@ -7,6 +7,8 @@ package com.ipn.mx.service;
 
 import com.ipn.mx.model.delegate.SAACDelegate;
 import com.ipn.mx.model.dto.Usuario;
+
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
@@ -18,9 +20,13 @@ import javax.faces.bean.ManagedBean;
  */
 @ManagedBean(name = "usuarioService", eager = true)
 @ApplicationScoped
-public class UsuarioService {
+public class UsuarioService implements Serializable {
 
-    private List<Usuario> usuarios;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4141121076661239655L;
+	private List<Usuario> usuarios;
     private int idEdificioSession;
 
     @PostConstruct

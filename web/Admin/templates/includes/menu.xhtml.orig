@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aside class="main-sidebar">
+		<section class="sidebar">
+			<ul class="sidebar-menu">
+				<li class="header">Menú de opciones</li>
+				<li class="#{menuService.getClassMenuClass( 1 )} treeview">
+	                <a href="#">
+	                    <span>Departamentos</span>
+	                    <i class="fa fa-angle-left pull-right"></i>
+	                </a>
+	                <ul class="treeview-menu">
+	                    <li class="#{menuService.getSubMenuClass( 11 )}"><a href="Departamentos.jsp?param=Alta"><i class="fa fa-circle-o"></i> Alta departamento</a></li>
+	                    <li class="#{menuService.getSubMenuClass( 12 )}"><a href="Departamentos.jsp?param=Consulta"><i class="fa fa-circle-o"></i> Consultar departamentos</a></li>
+	                </ul>
+	            </li>
+	            <li class="#{menuService.getClassMenuClass( 2 )} treeview">
+	                <a href="#">
+	                    <span>Mantenimiento y Gas</span>
+	                    <i class="fa fa-angle-left pull-right"></i>
+	                </a>
+	                <ul class="treeview-menu">
+	                    <li class="#{menuService.getSubMenuClass( 21 )}" ><a href="#" onclick="ingresarImporteMG()"><i class="fa fa-circle-o"></i> Ingresar importe</a></li>
+	                    <li class="#{menuService.getSubMenuClass( 22 )}" >
+	                    	<a href="#{facesContext.externalContext.requestContextPath}/Admin/gas/pagos.jsf"><i class="fa fa-circle-o"></i> Ingresar pagos</a>
+	                    </li>
+	                    <li class="#{menuService.getSubMenuClass( 23 )}" ><a href="#" onclick="consultarPagosMG()"><i class="fa fa-circle-o"></i> Lista de pagos</a></li>
+	                </ul>
+	            </li>
+	            <li class="#{menuService.getClassMenuClass( 3 )} treeview">
+	                <a href="#">
+	                    <span>Gastos</span> <i class="fa fa-angle-left pull-right"></i>
+	                </a>
+	                <ul class="treeview-menu">
+	                    <li class="#{menuService.getSubMenuClass( 31 )}" ><a href="Gastos.jsp?param=Alta"><i class="fa fa-circle-o"></i> Ingresar gastos</a></li>
+	                    <li class="#{menuService.getSubMenuClass( 32 )}" ><a href="Gastos.jsp?param=Consulta"><i class="fa fa-circle-o"></i> Consultar gastos</a></li>
+	
+	                </ul>
+	            </li>
+	            <li class="#{menuService.getClassMenuClass( 4 )} treeview">
+	                <a href="#">
+	                    <span>Reportes</span> <i class="fa fa-angle-left pull-right"></i>
+	                </a>
+	                <ul class="treeview-menu">
+	                    <li class="#{menuService.getSubMenuClass( 41 )}" ><a href="Reportes.jsp"><i class="fa fa-circle-o"></i> Obtener reportes</a></li>
+	                </ul>
+	            </li>
+	            <li class="#{menuService.getClassMenuClass( 5 )} treeview">
+	                <a href="#">
+	                    <span>Configuraci&oacute;n</span> <i class="fa fa-angle-left pull-right"></i>
+	                </a>
+	                <ul class="treeview-menu">
+	                    <li class="#{menuService.getSubMenuClass( 51 )}" ><a href="Configuracion.jsp?param=Edificio"><i class="fa fa-circle-o"></i> Edificio</a></li>
+	                    <li class="#{menuService.getSubMenuClass( 52 )}" ><a href="Configuracion.jsp?param=Gas"><i class="fa fa-circle-o"></i> Gas</a></li>
+	                    <li class="#{menuService.getSubMenuClass( 53 )}" ><a href="Configuracion.jsp?param=Mantenimiento"><i class="fa fa-circle-o"></i> Mantenimiento</a></li>
+	                </ul>
+	            </li>
+			</ul>
+		</section>
+	</aside>
+</ui:composition>

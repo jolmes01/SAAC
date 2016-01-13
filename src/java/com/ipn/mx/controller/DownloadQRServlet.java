@@ -9,9 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ipn.mx.model.dao.DepartamentoDAO;
 import com.ipn.mx.model.dto.Departamento;
+import com.ipn.mx.model.dto.Edificio;
 
 /**
  * Servlet implementation class DownloadQRServlet
@@ -27,6 +29,8 @@ public class DownloadQRServlet extends HttpServlet {
 		String codeString = null;
 		Departamento departamento = null;
 		DepartamentoDAO dao = null;
+		HttpSession session = request.getSession( false );
+		String idEdificio = null;
 		
 		codeString = request.getParameter( "code" );
 		if( codeString == null || codeString.isEmpty() ){
@@ -36,10 +40,20 @@ public class DownloadQRServlet extends HttpServlet {
 		codeString = codeString.substring( codeString.indexOf( '-' ) + 1 );
 		code = Integer.parseInt( codeString );
 		
+		if( session == null ){
+			System.err.println( "No se encontr\u00f3 el objeto de sesi\u00f3n" );
+			return;
+		}
+		idEdificio = (String)session.getAttribute( "Edificio" );
+		if( idEdificio == null ){
+			System.err.println( "El parametro idEdificio no se encontr\u00f3" );
+			return;
+		}
 		dao = new DepartamentoDAO( );
-                departamento = new Departamento();
-                departamento.setIdDepartamento(code);
-		departamento = dao.read(departamento);
+        departamento = new Departamento( );
+        departamento.setIdDepartamento( code );
+        departamento.setEdificio( new Edificio( Integer.parseInt( idEdificio ) ) );
+		departamento = dao.read( departamento );
 		
 		if( departamento == null ){
 			response.sendError( 412, "The id of the 'departamento' was not found, or it has no QR attached" );

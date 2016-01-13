@@ -18,9 +18,9 @@ import java.util.Date;
 public class configuracionMttoBean extends BaseBean{
     
     private configuracionMtto dto;
-    private static final String URL_CONTEXT = "/SAAC/faces/Admin/Configuracion/";
+    private static final String URL_CONTEXT = "/SAAC/Admin/Configuracion/";
     //Formularios para Gas
-    private static final String MTTO_FORM = "Mantenimiento.xhtml";
+    private static final String MTTO_FORM = "Mantenimiento.jsf";
     private int idEdificioSession;
 
     /**

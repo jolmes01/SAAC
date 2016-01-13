@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
+import org.omnifaces.util.Faces;
 
 import com.ipn.mx.model.dao.UsuarioDAO;
 import com.ipn.mx.model.dto.Usuario;
+import com.ipn.mx.service.CommonService;
 
 public class Login extends HttpServlet {
 
@@ -28,22 +30,32 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     	response.setContentType( "text/plain" );
         String id = request.getParameter("id");
+        CommonService commonService = null;
         
         if (id != null) {
             if ( "Ingreso".equals( id ) ) {
             	
                 String userName = request.getParameter("userName");
                 String claveUser = request.getParameter("claveUser");
+                
                 UsuarioDAO uDAO = new UsuarioDAO();
                 Usuario u = new Usuario();
                 u.setUserName(userName);
                 u.setClaveUser(claveUser);
-                if (uDAO.login(u)) {
+                u = uDAO.login(u);
+                if ( u != null ) {
                     if (uDAO.tipoUsuario(u) == 1) {
+                    	commonService = new CommonService( );
                         HttpSession session = request.getSession(true);
                         session.setAttribute("session", true);
                         session.setAttribute("userName", u.getUserName());
                         session.setAttribute("Edificio", "1");
+                        
+                        Faces.login( userName, claveUser);
+                        
+                        commonService.setUsuario( u );
+                        Faces.setSessionAttribute( "commonService", commonService );
+                        
                         response.getWriter().print( 
                         		new JSONObject( )
                         		.put( "status", RC_OK )

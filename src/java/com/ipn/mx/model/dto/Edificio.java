@@ -20,12 +20,22 @@ import javax.persistence.Table;
 @Table (name="edificio")
 public class Edificio implements Serializable{
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6867371516154205601L;
+	@Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private int idEdificio;
     private String nombre;
     private String direccion;
 
+    public Edificio( ){}
+    
+    public Edificio( int id ){
+    	this.idEdificio = id;
+    }
+    
     public int getIdEdificio() {
         return idEdificio;
     }

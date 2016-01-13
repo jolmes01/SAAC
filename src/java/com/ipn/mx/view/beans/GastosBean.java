@@ -5,12 +5,13 @@
  */
 package com.ipn.mx.view.beans;
 
-import com.ipn.mx.model.delegate.SAACDelegate;
-import com.ipn.mx.model.dto.Gastos;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+
+import com.ipn.mx.model.delegate.SAACDelegate;
+import com.ipn.mx.model.dto.Gastos;
 
 /**
  *
@@ -20,10 +21,10 @@ public class GastosBean extends BaseBean{
     
     private Gastos dto;
     private int idEdificioSession;
-    private static final String URL_CONTEXT = "/SAAC/faces/Admin/Gastos/";
+    private static final String URL_CONTEXT = "/SAAC/Admin/Gastos/";
     //Formularios para Gastos
-    private static final String GASTO_FORM = "Gasto.xhtml";
-    private static final String CONSULTA_GASTOS_FORM = "Consulta_Gastos.xhtml";
+    private static final String GASTO_FORM = "Gasto.jsf";
+    private static final String CONSULTA_GASTOS_FORM = "Consulta_Gastos.jsf";
 
     /**
      * Creates a new instance of GastosBean
@@ -51,9 +52,9 @@ public class GastosBean extends BaseBean{
     }
 
     public void editar(int idGastos, int idEdificio) throws IOException {
-        dto = new Gastos();
         setAccion(ACC_ACTUALIZAR);
         dto = seleccionaGastos(idGastos, idEdificio);
+        commonService.setTemporalObject( dto );
         redirectTo(URL_CONTEXT + GASTO_FORM);
     }
 

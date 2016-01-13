@@ -36,11 +36,11 @@ public class UsuarioFacade {
         return dao.read(object);
     }
 
-    public List readAll(int idEdificio){
+    public List<Usuario> readAll(int idEdificio){
         return dao.readAll(idEdificio);
     }
     
-    public boolean login(Usuario object){
+    public Usuario login(Usuario object){
         return dao.login(object);
     }
     

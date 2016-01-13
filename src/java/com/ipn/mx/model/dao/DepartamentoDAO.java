@@ -6,19 +6,19 @@
 package com.ipn.mx.model.dao;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import com.ipn.mx.model.dto.Departamento;
-import com.ipn.mx.model.dto.Edificio;
-import com.ipn.mx.model.dto.Usuario;
-import com.ipn.mx.utils.CodeGenerator;
-import com.ipn.mx.utils.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import com.ipn.mx.model.dto.Departamento;
+import com.ipn.mx.utils.CodeGenerator;
+import com.ipn.mx.utils.HibernateUtil;
 
 /**
  *
@@ -26,22 +26,22 @@ import org.hibernate.Transaction;
  */
 public class DepartamentoDAO {
 
-    public int create(Departamento departamento) {
-        int value = 1;
+    public boolean create(Departamento departamento) {
+        
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
         try {
             t.begin();
             s.save(departamento);
             t.commit();
+            return true;
         }catch(HibernateException he){
+        	he.printStackTrace( );
             if(t.isActive() && t != null){
                 t.rollback();
-                value = 0;
             }
         }
-        System.err.println(value);
-        return value;
+        return false;
     }
 
     public void update(Departamento departamento) {
@@ -58,29 +58,36 @@ public class DepartamentoDAO {
         }
     }
 
-    public void delete(Departamento departamento){
+    public boolean delete(Departamento departamento){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
         try {
             t.begin();
             s.delete(departamento);
             t.commit();
+            return true;
         }catch(HibernateException he){
+        	he.printStackTrace( );
             if(t.isActive() && t != null){
                 t.rollback();
             }
         }
+        
+        return false;
     }
 
-    public Departamento read(Departamento departamento){
+    @SuppressWarnings("unchecked")
+	public Departamento read(Departamento departamento){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
-        List resultados = null;
+        List<Departamento> resultados = null;
         try {
             t.begin();
             Query q = s.createQuery("FROM Departamento WHERE idDepartamento = :deptartamento_idDepartamento AND idEdificio = :departamento_idEdificio");
             q.setParameter("deptartamento_idDepartamento", departamento.getIdDepartamento());
-            q.setParameter("departamento_idEdificio", departamento.getEdificio().getIdEdificio());
+            if( departamento.getEdificio() != null ){
+            	q.setParameter("departamento_idEdificio", departamento.getEdificio().getIdEdificio());
+            }
             resultados = q.list();
             t.commit();
             if(resultados.size() > 0){
@@ -96,10 +103,11 @@ public class DepartamentoDAO {
         return departamento;
     }
 
-    public List readAll(int idEdificio){
+    @SuppressWarnings("unchecked")
+	public List<Departamento> readAll(int idEdificio){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
-        List resultados = null;
+        List<Departamento> resultados = null;
         try {
             t.begin();
             Query q = s.createQuery("FROM Departamento WHERE idEdificio = :departamento_id");
@@ -114,21 +122,30 @@ public class DepartamentoDAO {
         return resultados;
     }
 
-    public static void writeQR(Departamento departamento, String directorio) throws IOException {
+    public static void writeQR(Departamento departamento, String directorio)  {
         byte[] image = null;
         FileOutputStream fos = null;
         File file = null;
         String path = null;
 
-        path = directorio + "/QR/" + System.currentTimeMillis() + ".png";
+        path = directorio + "QR/" + System.currentTimeMillis() + ".png";
         image = CodeGenerator.generateQR(departamento.getCodigoQR(), "png");
         if (image == null || image.length < 1) {
             return;
         }
         file = new File(path);
-        fos = new FileOutputStream(file);
-        fos.write(image);
-        fos.close();
+        try {
+        	System.out.println( file.getAbsolutePath() );
+			fos = new FileOutputStream(file);
+			fos.write(image);
+			fos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
 
         departamento.setQrLength(image.length);
         departamento.setQrPath(path);

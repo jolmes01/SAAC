@@ -7,7 +7,9 @@ package com.ipn.mx.model.dao;
 
 import com.ipn.mx.model.dto.Usuario;
 import com.ipn.mx.utils.HibernateUtil;
+
 import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -78,10 +80,11 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public List readAll(int idEdificio){
+    @SuppressWarnings("unchecked")
+	public List<Usuario> readAll(int idEdificio){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
-        List resultados = null;
+        List<Usuario> resultados = null;
         try {
             t.begin();
             Query q = s.createQuery("FROM Usuario WHERE idEdificio = :edificio_id");
@@ -96,10 +99,11 @@ public class UsuarioDAO {
         return resultados;
     }
     
-    public boolean login(Usuario usuario){
+    @SuppressWarnings("unchecked")
+	public Usuario login(Usuario usuario){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
-        List resultados = null;
+        List<Usuario> resultados = null;
         try {
             t.begin();
             Query q = s.createQuery("FROM Usuario U WHERE U.userName = :usuario_user AND U.claveUser = :usuario_clave");
@@ -107,13 +111,15 @@ public class UsuarioDAO {
             q.setParameter("usuario_clave", usuario.getClaveUser());
             resultados = q.list();
             t.commit();
-            if(resultados.size() > 0) return true;
+            if(resultados.size() > 0){
+            	return resultados.get( 0 );
+            }
         }catch(HibernateException he){
             if(t.isActive() && t != null){
                 t.rollback();
             }
         }
-        return false;
+        return null;
     }
     
     public int tipoUsuario(Usuario usuario){

@@ -17,9 +17,9 @@ import java.util.List;
 public class EdificioBean extends BaseBean {
     
     private Edificio dto;
-    private static final String URL_CONTEXT = "/SAAC/faces/Admin/Configuracion/";
+    private static final String URL_CONTEXT = "/SAAC/Admin/Configuracion/";
     //Formularios para Edificio
-    private static final String EDIFICIO_FORM = "Edificio.xhtml";
+    private static final String EDIFICIO_FORM = "Edificio.jsf";
 
     /**
      * Creates a new instance of EdificioBean
@@ -31,6 +31,7 @@ public class EdificioBean extends BaseBean {
     //Borrar al terminar el proyecto
     public void edificioPrueba(boolean isNuevo) throws IOException{
         dto = new Edificio();
+        commonService.setTemporalObject( dto );
         setAccion(ACC_CREAR);
         if(isNuevo) redirectTo(URL_CONTEXT + EDIFICIO_FORM);
         else redirectTo(URL_CONTEXT + EDIFICIO_FORM);
@@ -39,6 +40,7 @@ public class EdificioBean extends BaseBean {
     //Actions
     public void nuevo() throws IOException {
         dto = new Edificio();
+        commonService.setTemporalObject( dto );
         setAccion(ACC_CREAR);
         redirectTo(URL_CONTEXT + EDIFICIO_FORM);
         

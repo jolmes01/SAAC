@@ -76,9 +76,8 @@ public class AddCondomino extends HttpServlet {
             	depto.setCodigoQR( CodeGenerator.generateSHA( depto.getUsuario( ).getUserName( ) + depto.getUsuario( ).getClaveUser( ) + depto.getIdDepartamento( )  ) );
                 String directorio = getServletContext().getRealPath("");
             	DepartamentoDAO.writeQR( depto,directorio );
-                int value = dDAO.create( depto );
-                if(value == 204 || value == 102){
-                	rutaDeEnvio = "./Admin/Departamentos.jsp?param=Alta&code=" + value;
+                if( dDAO.create( depto ) ){
+                	rutaDeEnvio = "./Admin/Departamentos.jsp?param=Alta&code=true";
                 }
             }
             if (request.getParameter("param").equals("Actualizar")) {

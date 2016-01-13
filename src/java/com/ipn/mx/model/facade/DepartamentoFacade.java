@@ -20,7 +20,7 @@ public class DepartamentoFacade {
         dao = new DepartamentoDAO();
     }
     
-    public int create(Departamento departamento) {
+    public boolean create(Departamento departamento) {
         return dao.create(departamento);
     }
 
@@ -28,15 +28,15 @@ public class DepartamentoFacade {
         dao.update(departamento);
     }
 
-    public void delete(Departamento departamento){
-        dao.delete(departamento);
+    public boolean delete(Departamento departamento){
+        return dao.delete(departamento);
     }
 
     public Departamento read(Departamento departamento){
         return dao.read(departamento);
     }
 
-    public List readAll(int idEdificio){
+    public List<Departamento> readAll(int idEdificio){
         return dao.readAll(idEdificio);
     }
 }

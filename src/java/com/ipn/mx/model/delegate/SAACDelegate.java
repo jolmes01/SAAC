@@ -54,7 +54,7 @@ public class SAACDelegate {
     }
     
     //Código para Departamento
-    public int create(Departamento departamento) {
+    public boolean create(Departamento departamento) {
         return df.create(departamento);
     }
 
@@ -62,15 +62,15 @@ public class SAACDelegate {
         df.update(departamento);
     }
 
-    public void delete(Departamento departamento){
-        df.delete(departamento);
+    public boolean delete(Departamento departamento){
+        return df.delete(departamento);
     }
 
     public Departamento read(Departamento departamento){
         return df.read(departamento);
     }
 
-    public List readAllDepartamentos(int idEdificio){
+    public List<Departamento> readAllDepartamentos(int idEdificio){
         return df.readAll(idEdificio);
     }
     
@@ -196,12 +196,12 @@ public class SAACDelegate {
         return uf.read(object);
     }
 
-    public List readAllUsuarios(int idEdificio){
+    public List<Usuario> readAllUsuarios(int idEdificio){
         return uf.readAll(idEdificio);
     }
     
-    public boolean login(Usuario object){
-        return uf.login(object);
+    public Usuario login(Usuario object){
+        return uf.login( object );
     }
     
     public int tipoUsuario(Usuario object){

@@ -1,43 +1,33 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<faces-config version="2.2"
-              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-    <managed-bean>
-        <managed-bean-name>departamentoBean</managed-bean-name>
-        <managed-bean-class>com.ipn.mx.view.beans.DepartamentoBean</managed-bean-class>
-    
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    
-    <navigation-rule>
-        <description>Redireccion a Departamentos</description>
-        <from-view-id>Administrador.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>Departamento</from-outcome>
-            <to-view-id>/Admin/Departamentos/Departamento.xhtml</to-view-id>
-            <redirect>true</redirect>
-        </navigation-case>
-    </navigation-rule>
-    <managed-bean>
-        <description>Control de los gastos del condominio</description>
-        <managed-bean-name>gastosBean</managed-bean-name>
-        <managed-bean-class>com.ipn.mx.view.beans.GastosBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>edificioBean</managed-bean-name>
-        <managed-bean-class>com.ipn.mx.view.beans.EdificioBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>configuracionGasBean</managed-bean-name>
-        <managed-bean-class>com.ipn.mx.view.beans.configuracionGasBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>configuracionMttoBean</managed-bean-name>
-        <managed-bean-class>com.ipn.mx.view.beans.configuracionMttoBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+ <managed-bean>
+  <description>Control de los gastos del condominio</description>
+  <managed-bean-name>gastosBean</managed-bean-name>
+  <managed-bean-class>com.ipn.mx.view.beans.GastosBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
+ <managed-bean>
+  <managed-bean-name>edificioBean</managed-bean-name>
+  <managed-bean-class>com.ipn.mx.view.beans.EdificioBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
+ <managed-bean>
+  <managed-bean-name>configuracionGasBean</managed-bean-name>
+  <managed-bean-class>com.ipn.mx.view.beans.configuracionGasBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
+ <managed-bean>
+  <managed-bean-name>configuracionMttoBean</managed-bean-name>
+  <managed-bean-class>com.ipn.mx.view.beans.configuracionMttoBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
+ <navigation-rule>
+  <from-view-id>/Admin/Administrador.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>Departamento</from-outcome>
+   <to-view-id>/Admin/Departamentos/Departamento.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <application/>
 </faces-config>
