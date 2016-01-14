@@ -20,9 +20,9 @@ import java.util.List;
 public class configuracionGasBean extends BaseBean {
 
     private configuracionGas dto;
-    private static final String URL_CONTEXT = "/SAAC/faces/Admin/Configuracion/";
+    private static final String URL_CONTEXT = "/SAAC/Admin/Configuracion/";
     //Formularios para Gas
-    private static final String GAS_FORM = "Gas.xhtml";
+    private static final String GAS_FORM = "Gas.jsf";
     private int idEdificioSession;
 
     /**

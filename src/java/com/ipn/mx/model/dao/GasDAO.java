@@ -5,13 +5,16 @@
  */
 package com.ipn.mx.model.dao;
 
-import com.ipn.mx.model.dto.Gas;
-import com.ipn.mx.utils.HibernateUtil;
 import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import com.ipn.mx.model.dto.Departamento;
+import com.ipn.mx.model.dto.Gas;
+import com.ipn.mx.utils.HibernateUtil;
 
 /**
  *
@@ -27,6 +30,7 @@ public class GasDAO {
             s.save(gas);
             t.commit();
         }catch(HibernateException he){
+        	he.printStackTrace( );
             if(t.isActive() && t != null){
                 t.rollback();
                 value = 0;
@@ -77,11 +81,45 @@ public class GasDAO {
         }
         return gas;
     }
+    
+    @SuppressWarnings("unchecked")
+	public List<Gas> getGasByDepartamento( Departamento departamento ){
+    	Session session = HibernateUtil.getSessionFactory( ).getCurrentSession( );
+    	Transaction transaction = session.getTransaction( );
+    	List<Gas> results = null;
+    	Query query = null;
+    	
+		transaction.begin( );
+		query = session.createQuery( "FROM Gas WHERE idDepartamento = :idDepartamento" );
+		query.setParameter( "idDepartamento" , departamento.getIdDepartamento() );
+		results = query.list( );
+    	transaction.commit( );
+    	
+    	return results;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public List<Gas> getGasToPay( Departamento departamento ){
+    	Session session = HibernateUtil.getSessionFactory( ).getCurrentSession( );
+    	Transaction transaction = session.getTransaction( );
+    	List<Gas> results = null;
+    	Query query = null;
+    	
+		transaction.begin( );
+		query = session.createQuery( "FROM Gas WHERE idDepartamento = :idDepartamento AND estado = :status" );
+		query.setParameter( "idDepartamento" , departamento.getIdDepartamento() );
+		query.setParameter( "status" , Gas.ESTADO_POR_PAGAR );
+		results = query.list( );
+    	transaction.commit( );
+    	
+    	return results;
+    }
 
-    public List readAll(){
+    @SuppressWarnings("unchecked")
+	public List<Gas> readAll(){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
-        List resultados = null;
+        List<Gas> resultados = null;
         try {
             t.begin();
             Query q = s.createQuery("FROM Gas");

@@ -5,11 +5,9 @@
  */
 package com.ipn.mx.model.dao;
 
-import com.ipn.mx.model.dto.configuracionMtto;
+import com.ipn.mx.model.dto.configuracionGas;
 import com.ipn.mx.utils.HibernateUtil;
-
 import java.util.List;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -19,34 +17,36 @@ import org.hibernate.Transaction;
  *
  * @author JL
  */
-public class configuracionMttoDAO {
-    public int create(configuracionMtto confMtto, int idEdificio) {
+public class configuracionGasDAO {
+
+    public int create(configuracionGas confGas, int idEdificio) {
         int value = 1;
         int existe = 0;
         Session s;
         Transaction t;
-        List<configuracionMtto> confMttoList = readAll(idEdificio);
-        if(confMttoList != null){
-            existe = confMttoList.size();
+        List<configuracionGas> confGasList = readAll(idEdificio);
+        if (confGasList != null) {
+            existe = confGasList.size();
             s = HibernateUtil.getSessionFactory().getCurrentSession();
             t = s.getTransaction();
-        }else{
+        } else {
             return value = 3;
         }
         try {
             t.begin();
-            if(existe == 0){
-                s.save(confMtto);
-            }else{
-                configuracionMtto cm = confMttoList.get(0);
-                confMtto.setEdificio(cm.getEdificio());
-                confMtto.setIdConfiguracionMtto(cm.getIdConfiguracionMtto());
-                s.update(confMtto);
+            if (existe == 0) {
+                s.save(confGas);
+            }
+            if(existe == 1){
+                configuracionGas cg = confGasList.get(0);
+                confGas.setEdificio(cg.getEdificio());
+                confGas.setIdConfiguracion(cg.getIdConfiguracion());
+                s.update(confGas);
                 value = 2;
             }
             t.commit();
-        }catch(HibernateException he){
-            if(t.isActive() && t != null){
+        } catch (HibernateException he) {
+            if (t.isActive() && t != null) {
                 t.rollback();
                 value = 0;
             }
@@ -54,73 +54,64 @@ public class configuracionMttoDAO {
         return value;
     }
 
-    public void update(configuracionMtto confMtto) {
+    public void update(configuracionGas confGas) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
         try {
             t.begin();
-            s.update(confMtto);
+            s.update(confGas);
             t.commit();
-        }catch(HibernateException he){
-            if(t.isActive() && t != null){
+        } catch (HibernateException he) {
+            if (t.isActive() && t != null) {
                 t.rollback();
             }
         }
     }
 
-    public void delete(configuracionMtto confMtto){
+    public void delete(configuracionGas confGas) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
         try {
             t.begin();
-            s.delete(confMtto);
+            s.delete(confGas);
             t.commit();
-        }catch(HibernateException he){
-            if(t.isActive() && t != null){
+        } catch (HibernateException he) {
+            if (t.isActive() && t != null) {
                 t.rollback();
             }
         }
     }
 
-    public configuracionMtto read(configuracionMtto confMtto){
+    public configuracionGas read(configuracionGas confGas) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
         try {
             t.begin();
-            confMtto = (configuracionMtto) s.get(configuracionMtto.class, confMtto.getIdConfiguracionMtto());
+            confGas = (configuracionGas) s.get(configuracionGas.class, confGas.getIdConfiguracion());
             t.commit();
-        }catch(HibernateException he){
-            if(t.isActive() && t != null){
+        } catch (HibernateException he) {
+            if (t.isActive() && t != null) {
                 t.rollback();
             }
         }
-        return confMtto;
+        return confGas;
     }
 
-    @SuppressWarnings("unchecked")
-	public List<configuracionMtto> readAll(int idEdificio){
+    public List readAll(int idEdificio) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
-        List<configuracionMtto> resultados = null;
+        List resultados = null;
         try {
             t.begin();
-            Query q = s.createQuery("FROM configuracionMtto WHERE idEdificio = :edificio_id");
+            Query q = s.createQuery("FROM configuracionGas WHERE idEdificio = :edificio_id");
             q.setParameter("edificio_id", idEdificio);
             resultados = q.list();
             t.commit();
-        }catch(HibernateException he){
-            if(t.isActive() && t != null){
+        } catch (HibernateException he) {
+            if (t.isActive() && t != null) {
                 t.rollback();
             }
         }
         return resultados;
     }
-	
-	public configuracionMtto readFirst( int idEdificio ){
-		List<configuracionMtto> list = readAll( idEdificio );
-		if( list == null || list.isEmpty() ){
-			return null;
-		}
-		return list.get( 0 );
-	}
 }

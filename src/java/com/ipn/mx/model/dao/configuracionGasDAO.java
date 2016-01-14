@@ -7,7 +7,9 @@ package com.ipn.mx.model.dao;
 
 import com.ipn.mx.model.dto.configuracionGas;
 import com.ipn.mx.utils.HibernateUtil;
+
 import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -97,10 +99,11 @@ public class configuracionGasDAO {
         return confGas;
     }
 
-    public List readAll(int idEdificio) {
+    @SuppressWarnings("unchecked")
+	public List<configuracionGas> readAll(int idEdificio) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
-        List resultados = null;
+        List<configuracionGas> resultados = null;
         try {
             t.begin();
             Query q = s.createQuery("FROM configuracionGas WHERE idEdificio = :edificio_id");

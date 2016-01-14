@@ -5,11 +5,9 @@
  */
 package com.ipn.mx.model.facade;
 
-import java.util.List;
-
 import com.ipn.mx.model.dao.MantenimientoDAO;
-import com.ipn.mx.model.dto.Departamento;
 import com.ipn.mx.model.dto.Mantenimiento;
+import java.util.List;
 
 /**
  *
@@ -38,18 +36,7 @@ public class MantenimientoFacade {
         return dao.read(object);
     }
 
-    public List<Mantenimiento> readAll(){
+    public List readAll(){
         return dao.readAll();
     }
-    
-    public List<Mantenimiento> getMantenimientosByDepartamento( Departamento departamento ){
-    	return dao.getMantenimientosByDepartamento( departamento );
-    }
-    
-    public List<Mantenimiento> getMantenimientosToPay( Departamento departamento) {
-    	return dao.getMantenimientosToPay( departamento );
-    }
-    
-    
-    
 }

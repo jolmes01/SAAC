@@ -6,9 +6,7 @@
 package com.ipn.mx.model.facade;
 
 import com.ipn.mx.model.dao.GasDAO;
-import com.ipn.mx.model.dto.Departamento;
 import com.ipn.mx.model.dto.Gas;
-
 import java.util.List;
 
 /**
@@ -37,16 +35,8 @@ public class GasFacade {
     public Gas read(Gas object){
         return dao.read(object);
     }
-    
-    public List<Gas> getGasByDepartamento( Departamento departamento ){
-    	return dao.getGasByDepartamento( departamento );
-    }
-    
-    public List<Gas> getGasToPay( Departamento departamento ){
-    	return dao.getGasToPay( departamento );
-    }
 
-    public List<Gas> readAll(){
+    public List readAll(){
         return dao.readAll();
     }
 }

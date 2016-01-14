@@ -36,7 +36,11 @@ public class configuracionMttoFacade {
         return dao.read(object);
     }
 
-    public List readAll(int idEdificio){
+    public List<configuracionMtto> readAll(int idEdificio){
         return dao.readAll(idEdificio);
+    }
+    
+    public configuracionMtto readFirst( int idEdificio ){
+    	return dao.readFirst( idEdificio );
     }
 }

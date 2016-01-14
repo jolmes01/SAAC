@@ -7,11 +7,10 @@ package com.ipn.mx.model.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -21,7 +20,12 @@ import javax.persistence.Table;
 @Table(name = "departamento")
 public class Departamento implements Serializable{
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2197589683361252831L;
+
+	@Id
     private int idDepartamento;
     
     @OneToOne (cascade = {CascadeType.ALL})
@@ -38,8 +42,17 @@ public class Departamento implements Serializable{
     private int qrLength;
     private BigDecimal saldoFavor;
 
+    
     public Departamento() {
         saldoFavor = BigDecimal.ZERO;
+        qrPath = " ";
+        qrLength = 0;
+        codigoQR = " ";
+    }
+    
+    public Departamento( int idDepartamento ){
+    	this.idDepartamento = idDepartamento;
+    	saldoFavor = BigDecimal.ZERO;
         qrPath = " ";
         qrLength = 0;
         codigoQR = " ";

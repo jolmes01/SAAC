@@ -5,13 +5,16 @@
  */
 package com.ipn.mx.model.dao;
 
-import com.ipn.mx.model.dto.Mantenimiento;
-import com.ipn.mx.utils.HibernateUtil;
 import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import com.ipn.mx.model.dto.Departamento;
+import com.ipn.mx.model.dto.Mantenimiento;
+import com.ipn.mx.utils.HibernateUtil;
 
 /**
  *
@@ -78,10 +81,11 @@ public class MantenimientoDAO {
         return mantenimiento;
     }
 
-    public List readAll(){
+    @SuppressWarnings("unchecked")
+	public List<Mantenimiento> readAll(){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
-        List resultados = null;
+        List<Mantenimiento> resultados = null;
         try {
             t.begin();
             Query q = s.createQuery("FROM Mantenimiento");
@@ -94,4 +98,36 @@ public class MantenimientoDAO {
         }
         return resultados;
     }
+    
+    @SuppressWarnings("unchecked")
+	public List<Mantenimiento> getMantenimientosByDepartamento( Departamento departamento ){
+    	Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction t = s.getTransaction();
+        List<Mantenimiento> resultados = null;
+        
+        t.begin();
+        Query q = s.createQuery("FROM Mantenimiento WHERE idDepartamento = :idDepartamento");
+        q.setParameter( "idDepartamento" , departamento.getIdDepartamento() );
+        resultados = q.list();
+        t.commit();
+        
+        return resultados;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public List<Mantenimiento> getMantenimientosToPay( Departamento departamento ){
+    	Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction t = s.getTransaction();
+        List<Mantenimiento> resultados = null;
+        
+        t.begin();
+        Query q = s.createQuery("FROM Mantenimiento WHERE idDepartamento = :idDepartamento AND estado = :status");
+        q.setParameter( "idDepartamento" , departamento.getIdDepartamento() );
+        q.setParameter( "status" , Mantenimiento.ESTADO_POR_PAGAR );
+        resultados = q.list();
+        t.commit();
+        
+        return resultados;
+    }
+    
 }

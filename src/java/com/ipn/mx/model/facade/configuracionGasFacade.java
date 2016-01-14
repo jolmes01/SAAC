@@ -36,7 +36,16 @@ public class configuracionGasFacade {
         return dao.read(object);
     }
 
-    public List readAll(int idEdificio){
+    public List<configuracionGas> readAll(int idEdificio){
         return dao.readAll(idEdificio);
     }
+    
+    public configuracionGas readFirst( int idEdificio ){
+    	List<configuracionGas> list = readAll( idEdificio );
+    	if( list == null || list.isEmpty() ){
+    		return null;
+    	}
+    	return list.get( 0 );
+    }
+    
 }

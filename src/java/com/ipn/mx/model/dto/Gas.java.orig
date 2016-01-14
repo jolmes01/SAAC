@@ -6,14 +6,11 @@
 package com.ipn.mx.model.dto;
 
 import java.io.Serializable;
-import java.util.Date;
-
+import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -24,19 +21,10 @@ import javax.persistence.Table;
 @Table (name = "gas")
 public class Gas implements Serializable{
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -4179162270241982620L;
-	public static final int ESTADO_POR_PAGAR = 1;
-	public static final int ESTADO_PAGADO = 2;
-	@Id
+    @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private int idGas;
-    @ManyToOne
-    @JoinColumn( name="idDepartamento" )
-    private Departamento departamento;
-    //private int idDepartamento;
+    private int idDepartamento;
     private long lecturaAnterior;
     private long lecturaActual;
     private int consumoMes;
@@ -55,7 +43,14 @@ public class Gas implements Serializable{
         this.idGas = idGas;
     }
 
-    
+    public int getIdDepartamento() {
+        return idDepartamento;
+    }
+
+    public void setIdDepartamento(int idDepartamento) {
+        this.idDepartamento = idDepartamento;
+    }
+
     public long getLecturaAnterior() {
         return lecturaAnterior;
     }
@@ -103,29 +98,10 @@ public class Gas implements Serializable{
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
     }
-    
-    public String getStatus( ){
-    	switch( estado ){
-    	case ESTADO_POR_PAGAR:
-    		return "Pendiente de pago";
-    	case ESTADO_PAGADO:
-    		return "Pago realizado";
-    	}
-    	return "";
-    }
-    
 
-    public Departamento getDepartamento() {
-		return departamento;
-	}
-
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
-	}
-
-	@Override
+    @Override
     public String toString() {
-        return "idGas = " + idGas 
+        return "idGas = " + idGas + " idDepartamento = " + idDepartamento
                 + " lecturaAnterior = " + lecturaAnterior + " lecturaActual = " + lecturaActual
                 + " consumoMes = " + consumoMes + " cantidad = " + cantidad + " estado = " + estado
                 + " fechaPago = " + fechaPago;

@@ -6,14 +6,12 @@
 package com.ipn.mx.model.dto;
 
 import java.io.Serializable;
-import java.util.Date;
-
+import java.sql.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -24,21 +22,12 @@ import javax.persistence.Table;
 @Table (name = "mantenimiento")
 public class Mantenimiento implements Serializable{
     
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -1498855814631449740L;
-	public static final int ESTADO_POR_PAGAR = 1;
-	public static final int ESTADO_PAGADO = 2;
-	@Id
+    @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private int idMantenimiento;
-    @ManyToOne
-    @JoinColumn( name="idDepartamento" )
-    private Departamento departamento;
     private double cantidad;
     private int estado;
-    //private int idDepartamento;
+    private int idDepartamento;
     private Date fechaPago;
 
     public Mantenimiento() {
@@ -51,15 +40,16 @@ public class Mantenimiento implements Serializable{
     public void setIdMantenimiento(int idMantenimiento) {
         this.idMantenimiento = idMantenimiento;
     }
-    public Departamento getDepartamento() {
-		return departamento;
-	}
 
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
-	}
+    public int getIdDepartamento() {
+        return idDepartamento;
+    }
 
-	public double getCantidad() {
+    public void setIdDepartamento(int idDepartamento) {
+        this.idDepartamento = idDepartamento;
+    }
+
+    public double getCantidad() {
         return cantidad;
     }
 
@@ -82,21 +72,10 @@ public class Mantenimiento implements Serializable{
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
     }
-    
-    public String getStatus( ){
-    	switch( estado ){
-    	case ESTADO_POR_PAGAR:
-    		return "Por pagar";
-    	case ESTADO_PAGADO:
-    		return "Pagado";
-    	}
-    	
-    	return "";
-    }
 
     @Override
     public String toString() {
-        return "idMantenimiento = " + idMantenimiento
+        return "idMantenimiento = " + idMantenimiento + " idDepartamento = " + idDepartamento
                 + " cantidad = " + cantidad + " estado = " + estado + " fechaPago = " + fechaPago;
     }
 

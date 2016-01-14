@@ -29,24 +29,26 @@
 		                    </li>	
 		                </ul>
 		            </li>
-		            <ui:remove>
 		            <li class="#{menuService.getClassMenuClass( 2 )} treeview">
 		                <a href="#">
 		                    <span>Mantenimiento y Gas</span>
 		                    <i class="fa fa-angle-left pull-right"></i>
 		                </a>
 		                <ul class="treeview-menu">
-		                    <li class="#{menuService.getSubMenuClass( 21 )}" ><a href="#" onclick="ingresarImporteMG()"><i class="fa fa-circle-o"></i> Ingresar importe</a></li>
+		                    <li class="#{menuService.getSubMenuClass( 21 )}" >
+		                    	<a href="#{facesContext.externalContext.requestContextPath}/Admin/gas/agregarCobros.jsf">
+		                    		<i class="fa fa-circle-o"></i> 
+		                    		<h:outputText value="Ingresar importe" />
+		                    	</a>
+		                   	</li>
 		                    <li class="#{menuService.getSubMenuClass( 22 )}" >
 		                    	<a href="#{facesContext.externalContext.requestContextPath}/Admin/gas/pagos.jsf">
 		                    		<i class="fa fa-circle-o"></i>
-		                    		<h:outputText value="Pagar mantenimiento"/>
+		                    		<h:outputText value="Pagos"/>
 		                    	</a>
 		                    </li>
-		                    <li class="#{menuService.getSubMenuClass( 23 )}" ><a href="#" onclick="consultarPagosMG()"><i class="fa fa-circle-o"></i> Lista de pagos</a></li>
 		                </ul>
 		            </li>
-		            </ui:remove>
 		            <li class="#{menuService.getClassMenuClass( 3 )} treeview">
 		                <a href="#">
 		                    <span>Gastos</span> <i class="fa fa-angle-left pull-right"></i>

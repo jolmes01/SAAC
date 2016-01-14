@@ -7,9 +7,7 @@ package com.ipn.mx.model.dao;
 
 import com.ipn.mx.model.dto.configuracionMtto;
 import com.ipn.mx.utils.HibernateUtil;
-
 import java.util.List;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -97,11 +95,10 @@ public class configuracionMttoDAO {
         return confMtto;
     }
 
-    @SuppressWarnings("unchecked")
-	public List<configuracionMtto> readAll(int idEdificio){
+    public List readAll(int idEdificio){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = s.getTransaction();
-        List<configuracionMtto> resultados = null;
+        List resultados = null;
         try {
             t.begin();
             Query q = s.createQuery("FROM configuracionMtto WHERE idEdificio = :edificio_id");
@@ -115,12 +112,4 @@ public class configuracionMttoDAO {
         }
         return resultados;
     }
-	
-	public configuracionMtto readFirst( int idEdificio ){
-		List<configuracionMtto> list = readAll( idEdificio );
-		if( list == null || list.isEmpty() ){
-			return null;
-		}
-		return list.get( 0 );
-	}
 }

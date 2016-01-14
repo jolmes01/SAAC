@@ -33,7 +33,7 @@ public class MenuService implements Serializable {
 			}
 			break;
 		case 2:
-			if( url.equals( "pagos.jsf" ) || url.equals( "agregarCobros.jsf" ) ){
+			if( url.equals( "pagos.jsf" ) ){
 				return "active";
 			}
 			break;
@@ -66,11 +66,6 @@ public class MenuService implements Serializable {
 			break;
 		case 12:
 			if( url.equals( "Consulta_Departamentos.jsf" ) ){
-				return "active";
-			}
-			break;
-		case 21:
-			if( url.equals( "agregarCobros.jsf" ) ){
 				return "active";
 			}
 			break;
